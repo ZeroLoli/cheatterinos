@@ -1,26 +1,33 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System.Collections;
 
-public class Game : MonoBehaviour {
+/// <summary>
+/// Main class
+/// </summary>
+public class Game : MonoBehaviour
+{
     public Canvas canvas;
     public Text text;
-    public GameObject debugCanvas, clockArm;
-    enum State {STARTING, STARTED, ENDED};
+    public GameObject debug, clockArm, player, busted, button;
+    enum State { STARTING, STARTED, ENDED };
     State state = State.STARTING;
     public bool isStarted = false;
     float duration;
     float deadline;
-    public AudioClip bell, clock;
+    public AudioClip bell, clock, toot;
     AudioSource audio;
+    public cameraMovement cameramovement;
+    public Teacher teacher;
 
-    void Start(){
+    void Start()
+    {
         audio = GetComponent<AudioSource>();
-        if (Debug.isDebugBuild)
+        if (Debug.isDebugBuild) // if in editor or debug build show some useful variables
         {
-            debugCanvas.SetActive(true);
+            debug.SetActive(true);
+            cameramovement.enabled = true;
         }
+        teacher.player = player;
     }
 
     void FixedUpdate()
@@ -32,6 +39,18 @@ public class Game : MonoBehaviour {
                 audio.Stop();
                 audio.PlayOneShot(bell);
                 state = State.ENDED;
+                cameramovement.enabled = false;
+                teacher.enabled = false;
+                teacher.transform.Rotate(Vector3.up * Vector3.Angle(teacher.transform.forward, teacher.transform.parent.forward));
+            }
+            if(teacher.spotted)
+            {
+                state = State.ENDED;
+                cameramovement.enabled = false;
+                teacher.enabled = false;
+                audio.Stop();
+                audio.PlayOneShot(toot);
+                busted.SetActive(true);
             }
             else
                 clockArm.transform.Rotate(Vector3.up * (Time.deltaTime / duration * 360), Space.Self);
@@ -43,10 +62,12 @@ public class Game : MonoBehaviour {
     /// </summary>
     public void startGame()
     {
-        duration = float.Parse(text.text)*60;
+        duration = float.Parse(text.text) * 60;
         deadline = Time.time + duration;
-        canvas.enabled = false;
-        debugCanvas.SetActive(false);
+        debug.SetActive(false);
+        button.SetActive(false);
+        cameramovement.enabled = true;
+        teacher.enabled = true;
         audio.clip = clock;
         audio.Play();
         state = State.STARTED;

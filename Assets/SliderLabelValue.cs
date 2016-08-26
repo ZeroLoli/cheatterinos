@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 
+/// <summary>
+/// Sets the time slider label value
+/// </summary>
 public class SliderLabelValue : MonoBehaviour
 {
     public Slider slider;
