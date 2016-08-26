@@ -12,8 +12,11 @@ public class Game : MonoBehaviour {
     public bool isStarted = false;
     float duration;
     float deadline;
+    public AudioClip bell, clock;
+    AudioSource audio;
 
     void Start(){
+        audio = GetComponent<AudioSource>();
         if (Debug.isDebugBuild)
         {
             debugCanvas.SetActive(true);
@@ -25,7 +28,11 @@ public class Game : MonoBehaviour {
         if (state == State.STARTED)
         {
             if (Time.time >= deadline)
+            {
+                audio.Stop();
+                audio.PlayOneShot(bell);
                 state = State.ENDED;
+            }
             else
                 clockArm.transform.Rotate(Vector3.up * (Time.deltaTime / duration * 360), Space.Self);
         }
@@ -40,6 +47,8 @@ public class Game : MonoBehaviour {
         deadline = Time.time + duration;
         canvas.enabled = false;
         debugCanvas.SetActive(false);
+        audio.clip = clock;
+        audio.Play();
         state = State.STARTED;
     }
 }
