@@ -25,7 +25,6 @@ public class cameraMovement : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        Cursor.lockState = CursorLockMode.Locked;
         _eyeXHost = EyeXHost.GetInstance();
         _gazePointProvider = _eyeXHost.GetGazePointDataProvider
                     (Tobii.EyeX.Framework.GazePointDataMode.LightlyFiltered);
@@ -47,7 +46,6 @@ public class cameraMovement : MonoBehaviour {
 
         // Gazepoint updating
         var gazePoint = _gazePointProvider.Last;
-        Debug.Log(gazePoint.Screen.x);
         // Basic keyboard movement
         // ??? IEyeXDataProvider < EyeXGazePoint > GetGazePointDataProvider(GazePointDataMode mode)
         if (Input.GetKey(KeyCode.W) || (gazePoint.Screen.y > UnityEngine.Screen.height * 0.9)) {
