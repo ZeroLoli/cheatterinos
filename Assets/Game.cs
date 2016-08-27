@@ -36,17 +36,16 @@ public class Game : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (buttonGaze.HasGaze && !buttonStare) {
-            buttonStare = true;
-            startTimer = Time.time;
-        }
-        if (!buttonGaze.HasGaze) {
-            buttonStare = false;
-        }
-        if (buttonGaze.HasGaze && Time.time - startTimer >= 0.5f) {
-            startGame();
-        }
-
+        //if (buttonGaze.HasGaze && !buttonStare) {
+        //    buttonStare = true;
+        //    startTimer = Time.time;
+        //}
+        //if (!buttonGaze.HasGaze) {
+        //    buttonStare = false;
+        //}
+        //if (buttonGaze.HasGaze && Time.time - startTimer >= 0.5f) {
+        //    startGame();
+        //}
             if (state == State.STARTED)
         {
             if (Time.time >= deadline)
