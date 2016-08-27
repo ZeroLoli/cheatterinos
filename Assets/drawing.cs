@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class Drawing : MonoBehaviour {
     public GameObject pen, desk;
     public Material mat;
-    public ArrayList nodeList = new ArrayList();
+    public List<Vector3> nodeList = new List<Vector3>();
     private Vector3 penPos;
     private LineRenderer line;
     private bool penDown = false;
@@ -21,7 +21,7 @@ public class Drawing : MonoBehaviour {
             line.SetColors(Color.black, Color.black);
             line.SetWidth(0.002f, 0.002f);
             line.useWorldSpace = true;
-            nodeList = new ArrayList();
+            nodeList = new List<Vector3>();
             line.SetPosition(0, transform.localPosition);
             penDown = true;
         }
