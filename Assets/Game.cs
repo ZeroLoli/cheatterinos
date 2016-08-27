@@ -34,7 +34,7 @@ public class Game : MonoBehaviour
             cameramovement.enabled = true;
         }
         teacher.player = player;
-        GenerateExam();
+        GenerateExam(); // create the player exam TODO also create the neighbour exams, this function returns the exam, toggle the correct answers on somehow
     }
 
     void FixedUpdate()
@@ -81,47 +81,52 @@ public class Game : MonoBehaviour
         state = State.STARTED;
     }
 
+    /// <summary>
+    /// Generates an exam and returns the exam
+    /// </summary>
+    /// <returns></returns>
     GameObject GenerateExam()
     {
-        try
+        // empty parent object for positioning purposes (also contains a broken checkbox header, remove those and attach separately)
+        GameObject exam = (GameObject)Instantiate(examPrefab, desk.transform.position + Vector3.up * (desk.transform.GetComponent<Collider>().bounds.extents.y + 0.01f), Quaternion.identity);
+
+        //load a bunch of random words from a text file and split on newline
+        string[] questions = questionFile.text.Split('\n');
+
+        // iterate through the number of questions wanted, layout optimized for 5
+        for (int i = 0; i < questionAmount; i++)
         {
-            GameObject exam = (GameObject)Instantiate(examPrefab, desk.transform.position + Vector3.up * (desk.transform.GetComponent<Collider>().bounds.extents.y + 0.01f), Quaternion.identity);
+            // row object, contains three checkboxes and a question text field
+            GameObject row = (GameObject)Instantiate(rowPrefab, exam.transform.position + Vector3.forward * (questionAmount / 2) * 0.0001f + Vector3.back * i * 0.15f, Quaternion.identity);
 
-            string[] questions = questionFile.text.Split('\n');
-            Debug.Log(questions.Length);
+            // make up a question
+            string question = "";
+            for (int j = 0; j < UnityEngine.Random.Range(4, 6); j++) // 4-5 random words, 7 was too much with current words
+                question += (question.Length == 0 ? "-" : " ") + questions[UnityEngine.Random.Range(0, questions.Length - 1)];
+            question += "?"; // append a question mark for good measure
+            row.transform.FindChild("Question").GetComponent<Text>().text = question; // set the text for the object
 
-            for (int i = 0; i < questionAmount; i++)
-            {
-                GameObject row = (GameObject)Instantiate(rowPrefab, exam.transform.position + Vector3.forward * (questionAmount / 2) * 0.0001f + Vector3.back * i * 0.15f, Quaternion.identity);
+            // randomize which checkbox is correct TODO mark the correct answers on neighbour exams
+            QuestionRow questionrow = row.GetComponent<QuestionRow>();
+            questionrow.rightAnswerBox = row.transform.GetComponentsInChildren<BoxCollider>()[UnityEngine.Random.Range(0, 3)].gameObject;
+            correctCheckboxes.Add(questionrow.rightAnswerBox);
 
-                string question = "";
-                for (int j = 0; j < UnityEngine.Random.Range(4, 6); j++)
-                    question += (question.Length == 0 ? "-" : " ") + questions[UnityEngine.Random.Range(0, questions.Length - 1)];
-                question += "?";
-                row.transform.FindChild("Question").GetComponent<Text>().text = question;
-
-                QuestionRow questionrow = row.GetComponent<QuestionRow>();
-                questionrow.rightAnswerBox = row.transform.GetComponentsInChildren<BoxCollider>()[UnityEngine.Random.Range(0, 3)].gameObject;
-                correctCheckboxes.Add(questionrow.rightAnswerBox);
-
-                row.transform.parent = exam.transform;
-            }
-
-            exam.transform.parent = canvas.transform;
-
-            return exam;
+            row.transform.parent = exam.transform;
         }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-        }
-        return null;
+
+        exam.transform.parent = canvas.transform;
+
+        return exam;
     }
 
+    /// <summary>
+    /// Example of how to check if something was checked
+    /// </summary>
     void CheckExam()
     {
         for (int i = 0; i < drawing.nodeList.Count; i++)
         {
+            // make a raycast from each node, if you hit a box you are in it. and the correct answer box is removed from a collection dunno why.
             RaycastHit hit;
             if (Physics.Raycast(drawing.nodeList[i], Vector3.down, out hit))
             {
