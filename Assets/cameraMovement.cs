@@ -27,7 +27,7 @@ public class cameraMovement : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        // Mouse movement
+        // Mouse movement (mouse used for handmovement now)
         /*if (!Input.GetMouseButton(0)) {
             rotationX += Input.GetAxis("Mouse X") * sensX * Time.deltaTime;
             rotationY += Input.GetAxis("Mouse Y") * sensY * Time.deltaTime;
@@ -38,6 +38,7 @@ public class cameraMovement : MonoBehaviour {
         }
 		*/
 
+        // Basic keyboard movement
         if (Input.GetKey(KeyCode.W)) {
             rotationY += speedY * Time.deltaTime;
             rotationY = Mathf.Clamp(rotationY, minY, maxY);

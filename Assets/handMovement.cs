@@ -2,17 +2,21 @@
 using System.Collections;
 
 public class handMovement : MonoBehaviour {
+    public Material mat;
+    public GameObject paper, pen;
+    public ArrayList nodeList;
+
     public float minX = -0.2f;
     public float maxX = 0.4f;
 
     public float minZ = -0.2f;
     public float maxZ = 0.4f;
-    public float speedX = 5.0f;
-    public float speedZ = 5.0f;
+    public float speedX = 3.0f;
+    public float speedZ = 3.0f;
 
-    float posX;
-    float posY;
-    float posZ;
+    private bool drawing;
+    private LineRenderer line;
+    float posX, posY, posZ;
 
 	// Use this for initialization
 	void Start () {
@@ -32,20 +36,66 @@ public class handMovement : MonoBehaviour {
         //    penY += speedY * Time.deltaTime;
         //    transform.Translate(new Vector3(0, 0, penY));
         //}
+
+        // Hand movement (Y), drawing
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            transform.position = new Vector3(posX, posY - 0.1f, posZ);
+        /*    GameObject myLine = new GameObject();
+            myLine.AddComponent<LineRenderer>();
+            LineRenderer line = myLine.GetComponent<LineRenderer>();
+            line.material = mat;
+            line.SetColors(Color.black, Color.black);
+            line.SetWidth(0.01f, 0.01f);
+            nodeList = new ArrayList();
+            line.SetVertexCount(0);
+            nodeList.Add(pen.transform.position);
+            drawing = true;*/
         }
-        if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
+        if (Input.GetKey(KeyCode.Mouse0))         {
+            transform.position = new Vector3(posX, posY - 0.03f, posZ);
+            //Gizmos.DrawLine()
+            /*GL.PushMatrix();
+            GL.Begin(GL.LINES);
+            GL.Color(Color.black);
+            GL.Vertex(new Vector3(posX, posY, posZ));
+            GL.Vertex(new Vector3(posX, posY, posZ));
+            GL.End();
+            GL.PopMatrix();*/
+            //paper.AddComponent<LineRenderer>();
+            //line = pen.GetComponent<LineRenderer>();
+            //DrawLine(pen.transform.position, new Vector3(pen.transform.position.x, paper.transform.position.y, pen.transform.position.z) /*+ new Vector3(0,0,0.01f)*/, Color.black, mat);
+            // Dynamic drawing:
+
+        }
+        /*if (drawing) {
+            nodeList.Add(pen.transform.position);
+            line.SetVertexCount(nodeList.Count);
+            line.SetPosition(nodeList.Count - 1, (Vector3)nodeList[nodeList.Count - 1]);
+        }*/
+        if (Input.GetKeyUp(KeyCode.Mouse0)) {
             transform.position = new Vector3(posX, posY, posZ);
+        //    drawing = false;
         }
 
-        //Hand movement (X+Z)
+        // Hand movement (X+Z)
         posX += Input.GetAxis("Mouse X") * speedX * Time.deltaTime;
         posZ += Input.GetAxis("Mouse Y") * speedZ * Time.deltaTime;
         posX = Mathf.Clamp(posX, minX, maxX);
         posZ = Mathf.Clamp(posZ, minZ, maxZ);
         transform.position= new Vector3(posX, transform.position.y, posZ);
+    }
+
+    void DrawLine(Vector3 start, Vector3 end, Color color, Material mat) {
+        GameObject drawLine = new GameObject();
+        drawLine.transform.position = start;
+        drawLine.AddComponent<LineRenderer>();
+        LineRenderer lr = drawLine.GetComponent<LineRenderer>();
+        lr.material = mat; //new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+        //lr.lightProbeUsage = 0;
+        lr.SetColors(color, color);
+        lr.SetWidth(0.01f, 0.01f);
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
     }
 }
