@@ -17,12 +17,19 @@ public class cameraMovement : MonoBehaviour {
     public float speedX = 50.0f;
     public float speedY = 50.0f;
 
+    private EyeXHost _eyeXHost;
+    private IEyeXDataProvider<EyeXGazePoint> _gazePointProvider;
+
     float rotationX = 0.0f;
     float rotationY = 0.0f;
 
     // Use this for initialization
     void Start () {
         //Cursor.lockState = CursorLockMode.Locked;
+        _eyeXHost = EyeXHost.GetInstance();
+        _gazePointProvider = _eyeXHost.GetGazePointDataProvider
+                    (Tobii.EyeX.Framework.GazePointDataMode.LightlyFiltered);
+        _gazePointProvider.Start();
 	}
 
     // Update is called once per frame
@@ -38,23 +45,27 @@ public class cameraMovement : MonoBehaviour {
         }
 		*/
 
+        // Gazepoint updating
+        var gazePoint = _gazePointProvider.Last;
+        Debug.Log(gazePoint.Screen.x);
         // Basic keyboard movement
-        if (Input.GetKey(KeyCode.W)) {
+        // ??? IEyeXDataProvider < EyeXGazePoint > GetGazePointDataProvider(GazePointDataMode mode)
+        if (Input.GetKey(KeyCode.W) || (gazePoint.Screen.y > UnityEngine.Screen.height * 0.9)) {
             rotationY += speedY * Time.deltaTime;
             rotationY = Mathf.Clamp(rotationY, minY, maxY);
             transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
         }
-        if (Input.GetKey(KeyCode.S)) {
+        if (Input.GetKey(KeyCode.S) || (gazePoint.Screen.y < UnityEngine.Screen.height * 0.1)) {
             rotationY -= speedY * Time.deltaTime;
             rotationY = Mathf.Clamp(rotationY, minY, maxY);
             transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
         }
-        if (Input.GetKey(KeyCode.A)) {
+        if (Input.GetKey(KeyCode.A) || (gazePoint.Screen.x < UnityEngine.Screen.width * 0.2)) {
             rotationX -= speedX * Time.deltaTime;
             rotationX = Mathf.Clamp(rotationX, minX, maxX);
             transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
         }
-        if (Input.GetKey(KeyCode.D)) {
+        if (Input.GetKey(KeyCode.D) || (gazePoint.Screen.x > UnityEngine.Screen.width * 0.8)) {
             rotationX += speedX * Time.deltaTime;
             rotationX = Mathf.Clamp(rotationX, minX, maxX);
             transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);

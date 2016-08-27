@@ -48,7 +48,6 @@ public class drawing : MonoBehaviour
         if (penDown)
         {
             nodeList.Add(pen.transform.position);
-            Debug.Log(nodeList[0]);
             line.SetVertexCount(nodeList.Count);
             line.SetPosition(nodeList.Count-1, (Vector3)nodeList[nodeList.Count -1]);
         }
