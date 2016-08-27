@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class drawing : MonoBehaviour
-{
-    public GameObject pen;
+public class drawing : MonoBehaviour {
+    public GameObject pen, desk;
     public Material mat;
     public ArrayList nodeList = new ArrayList();
     private Vector3 penPos;
@@ -11,25 +10,12 @@ public class drawing : MonoBehaviour
     private bool penDown = false;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        /*	    if (Input.GetKey(KeyCode.Mouse0)) {
-                    GameObject drawLine = new GameObject();
-                    drawLine.transform.position = transform.position;
-                    drawLine.AddComponent<LineRenderer>();
-                    LineRenderer lr = drawLine.GetComponent<LineRenderer>();
-                    lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
-                    lr.SetColors(Color.black, Color.black);
-                    lr.SetWidth(1.1f, 1.1f);
-                    lr.SetPosition(0, transform.position);
-                    lr.SetPosition(1, transform.position);
-                }*/
+    void Update() {
+        // Drawing based on pen transform:
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             GameObject myLine = new GameObject();
@@ -45,14 +31,12 @@ public class drawing : MonoBehaviour
             line.SetPosition(0, transform.localPosition);
             penDown = true;
         }
-        if (penDown)
-        {
+        if (penDown) {
             nodeList.Add(pen.transform.position);
             line.SetVertexCount(nodeList.Count);
             line.SetPosition(nodeList.Count-1, (Vector3)nodeList[nodeList.Count -1]);
         }
-        if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
+        if (Input.GetKeyUp(KeyCode.Mouse0)) {
             penDown = false;
         }
     }

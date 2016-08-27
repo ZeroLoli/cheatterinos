@@ -18,6 +18,9 @@ public class Game : MonoBehaviour
     AudioSource audio;
     public cameraMovement cameramovement;
     public Teacher teacher;
+    public float startTimer;
+    private GazeAwareComponent buttonGaze;
+    private bool buttonStare;
 
     void Start()
     {
@@ -28,11 +31,23 @@ public class Game : MonoBehaviour
             cameramovement.enabled = true;
         }
         teacher.player = player;
+        buttonGaze = button.GetComponent<GazeAwareComponent>();
     }
 
     void FixedUpdate()
     {
-        if (state == State.STARTED)
+        if (buttonGaze.HasGaze && !buttonStare) {
+            buttonStare = true;
+            startTimer = Time.time;
+        }
+        if (!buttonGaze.HasGaze) {
+            buttonStare = false;
+        }
+        if (buttonGaze.HasGaze && Time.time - startTimer >= 0.5f) {
+            startGame();
+        }
+
+            if (state == State.STARTED)
         {
             if (Time.time >= deadline)
             {
