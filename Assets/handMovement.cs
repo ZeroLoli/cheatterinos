@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class handMovement : MonoBehaviour {
+public class handMovement : MonoBehaviour
+{
     public Material mat;
-    public GameObject paper, pen;
+    public GameObject paper, pen, desk;
     public ArrayList nodeList;
 
-    public float minX = -0.2f;
+    public float minX;
     public float maxX = 0.4f;
 
     public float minZ = -0.2f;
     public float maxZ = 0.4f;
+
     public float speedX = 3.0f;
     public float speedZ = 3.0f;
 
@@ -18,15 +20,23 @@ public class handMovement : MonoBehaviour {
     private LineRenderer line;
     float posX, posY, posZ;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         posX = transform.position.x;
         posY = transform.position.y;
         posZ = transform.position.z;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        minX = desk.transform.position.x - 0.5f;
+        maxX = desk.transform.position.x + 0.5f;
+        minZ = desk.transform.position.z - 0.5f;
+        maxZ = desk.transform.position.z + 0.5f;
+
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         /*if (Input.GetKey(KeyCode.Mouse0) {
             handY -= speedY * Time.deltaTime;
             handY = Mathf.Clamp(handY, minY, maxY);
@@ -41,19 +51,20 @@ public class handMovement : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-        /*    GameObject myLine = new GameObject();
-            myLine.AddComponent<LineRenderer>();
-            LineRenderer line = myLine.GetComponent<LineRenderer>();
-            line.material = mat;
-            line.SetColors(Color.black, Color.black);
-            line.SetWidth(0.01f, 0.01f);
-            nodeList = new ArrayList();
-            line.SetVertexCount(0);
-            nodeList.Add(pen.transform.position);
-            drawing = true;*/
+            /*    GameObject myLine = new GameObject();
+                myLine.AddComponent<LineRenderer>();
+                LineRenderer line = myLine.GetComponent<LineRenderer>();
+                line.material = mat;
+                line.SetColors(Color.black, Color.black);
+                line.SetWidth(0.01f, 0.01f);
+                nodeList = new ArrayList();
+                line.SetVertexCount(0);
+                nodeList.Add(pen.transform.position);
+                drawing = true;*/
         }
-        if (Input.GetKey(KeyCode.Mouse0))         {
-            transform.position = new Vector3(posX, posY - 0.03f, posZ);
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            transform.position = new Vector3(posX, posY - 0.005f, posZ);
             //Gizmos.DrawLine()
             /*GL.PushMatrix();
             GL.Begin(GL.LINES);
@@ -73,9 +84,10 @@ public class handMovement : MonoBehaviour {
             line.SetVertexCount(nodeList.Count);
             line.SetPosition(nodeList.Count - 1, (Vector3)nodeList[nodeList.Count - 1]);
         }*/
-        if (Input.GetKeyUp(KeyCode.Mouse0)) {
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
             transform.position = new Vector3(posX, posY, posZ);
-        //    drawing = false;
+            //    drawing = false;
         }
 
         // Hand movement (X+Z)
@@ -83,19 +95,19 @@ public class handMovement : MonoBehaviour {
         posZ += Input.GetAxis("Mouse Y") * speedZ * Time.deltaTime;
         posX = Mathf.Clamp(posX, minX, maxX);
         posZ = Mathf.Clamp(posZ, minZ, maxZ);
-        transform.position= new Vector3(posX, transform.position.y, posZ);
+        transform.position = new Vector3(posX, transform.position.y, posZ);
     }
 
-    void DrawLine(Vector3 start, Vector3 end, Color color, Material mat) {
-        GameObject drawLine = new GameObject();
-        drawLine.transform.position = start;
-        drawLine.AddComponent<LineRenderer>();
-        LineRenderer lr = drawLine.GetComponent<LineRenderer>();
-        lr.material = mat; //new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
-        //lr.lightProbeUsage = 0;
-        lr.SetColors(color, color);
-        lr.SetWidth(0.01f, 0.01f);
-        lr.SetPosition(0, start);
-        lr.SetPosition(1, end);
-    }
+    //void DrawLine(Vector3 start, Vector3 end, Color color, Material mat) {
+    //    GameObject drawLine = new GameObject();
+    //    drawLine.transform.position = start;
+    //    drawLine.AddComponent<LineRenderer>();
+    //    LineRenderer lr = drawLine.GetComponent<LineRenderer>();
+    //    lr.material = mat; //new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+    //    //lr.lightProbeUsage = 0;
+    //    lr.SetColors(color, color);
+    //    lr.SetWidth(0.01f, 0.01f);
+    //    lr.SetPosition(0, start);
+    //    lr.SetPosition(1, end);
+    //}
 }

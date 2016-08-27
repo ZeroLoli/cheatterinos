@@ -1,25 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class drawing : MonoBehaviour {
+public class drawing : MonoBehaviour
+{
     public GameObject pen;
     public Material mat;
-    public ArrayList nodeList;
+    public ArrayList nodeList = new ArrayList();
     private Vector3 penPos;
     private LineRenderer line;
     private bool penDown = false;
 
-    struct newLine
+    // Use this for initialization
+    void Start()
     {
 
     }
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         /*	    if (Input.GetKey(KeyCode.Mouse0)) {
                     GameObject drawLine = new GameObject();
                     drawLine.transform.position = transform.position;
@@ -34,25 +33,24 @@ public class drawing : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             GameObject myLine = new GameObject();
+            myLine.transform.position = pen.transform.position;
             myLine.AddComponent<LineRenderer>();
             line = myLine.GetComponent<LineRenderer>();
             line.material = mat;
             line.SetVertexCount(0);
             line.SetColors(Color.black, Color.black);
             line.SetWidth(0.002f, 0.002f);
-            line.useWorldSpace = true;
-            nodeList = new ArrayList();
-            
+            //line.useWorldSpace = true;
+            //nodeList = new ArrayList();
             nodeList.Add(pen.transform.position);
             penDown = true;
         }
         if (penDown)
         {
-            Debug.DrawLine(new Vector3(0,0,0), pen.transform.position);
-            Debug.Log(penDown);
             nodeList.Add(pen.transform.position);
+            Debug.Log(nodeList[0]);
             line.SetVertexCount(nodeList.Count);
-            line.SetPosition(nodeList.Count - 1, (Vector3)nodeList[nodeList.Count - 1]);
+            line.SetPosition(nodeList.Count -1, (Vector3)nodeList[nodeList.Count -1]);
         }
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
