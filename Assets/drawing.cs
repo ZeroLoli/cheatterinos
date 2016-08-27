@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class drawing : MonoBehaviour {
+public class Drawing : MonoBehaviour {
     public GameObject pen, desk;
     public Material mat;
     public ArrayList nodeList = new ArrayList();
@@ -9,21 +9,15 @@ public class drawing : MonoBehaviour {
     private LineRenderer line;
     private bool penDown = false;
 
-    // Use this for initialization
-    void Start() {
-
-    }
-
     void Update() {
         // Drawing based on pen transform:
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
+        if (Input.GetKeyDown(KeyCode.Mouse0)) {
             GameObject myLine = new GameObject();
             myLine.transform.position = pen.transform.position;
             myLine.AddComponent<LineRenderer>();
             line = myLine.GetComponent<LineRenderer>();
             line.material = mat;
-            line.SetVertexCount(0);
+            line.SetVertexCount(1);
             line.SetColors(Color.black, Color.black);
             line.SetWidth(0.002f, 0.002f);
             line.useWorldSpace = true;

@@ -16,6 +16,9 @@ public class handMovement : MonoBehaviour
     public float speedX = 3.0f;
     public float speedZ = 3.0f;
 
+    private float maxXZ;
+    private float maxZX;
+
     private bool drawing;
     private LineRenderer line;
     float posX, posY, posZ;
@@ -26,10 +29,10 @@ public class handMovement : MonoBehaviour
         posX = transform.position.x;
         posY = transform.position.y;
         posZ = transform.position.z;
-        minX = desk.transform.position.x - 0.48f;
-        maxX = desk.transform.position.x + 0.48f;
-        minZ = desk.transform.position.z - 0.48f;
-        maxZ = desk.transform.position.z + 0.48f;
+        minX = desk.transform.position.x - 0.24f;
+        maxX = desk.transform.position.x + 0.54f;
+        minZ = desk.transform.position.z - 0.54f;
+        maxZ = desk.transform.position.z + 0.36f;
 
 
     }
@@ -90,8 +93,19 @@ public class handMovement : MonoBehaviour
         // Hand movement (X+Z)
         posX += Input.GetAxis("Mouse X") * speedX * Time.deltaTime;
         posZ += Input.GetAxis("Mouse Y") * speedZ * Time.deltaTime;
+        // Fun times vvvvvvvvv
+        //maxXZ = maxX - Mathf.Log(posZ);
+        //maxZX = maxZ - Mathf.Log(posX);
+        // End of fun ^^^^^^^^
+        //maxXZ = maxX - transform.localPosition.x * transform.localPosition.z;
+        //maxZX = maxZ - transform.localPosition.x * transform.localPosition.z;
+        //maxXZ = Mathf.Clamp(maxXZ, minX, maxX);
+        //maxZX = Mathf.Clamp(maxZX, minZ, maxZ);
+        //posX = Mathf.Clamp(posX, minX, maxXZ);
+        //posZ = Mathf.Clamp(posZ, minZ, maxZX);
         posX = Mathf.Clamp(posX, minX, maxX);
         posZ = Mathf.Clamp(posZ, minZ, maxZ);
+
         transform.position = new Vector3(posX, transform.position.y, posZ);
     }
 
