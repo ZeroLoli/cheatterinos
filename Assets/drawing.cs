@@ -40,9 +40,9 @@ public class drawing : MonoBehaviour
             line.SetVertexCount(0);
             line.SetColors(Color.black, Color.black);
             line.SetWidth(0.002f, 0.002f);
-            //line.useWorldSpace = true;
-            //nodeList = new ArrayList();
-            nodeList.Add(pen.transform.position);
+            line.useWorldSpace = true;
+            nodeList = new ArrayList();
+            line.SetPosition(0, transform.localPosition);
             penDown = true;
         }
         if (penDown)
@@ -50,7 +50,7 @@ public class drawing : MonoBehaviour
             nodeList.Add(pen.transform.position);
             Debug.Log(nodeList[0]);
             line.SetVertexCount(nodeList.Count);
-            line.SetPosition(nodeList.Count -1, (Vector3)nodeList[nodeList.Count -1]);
+            line.SetPosition(nodeList.Count-1, (Vector3)nodeList[nodeList.Count -1]);
         }
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {

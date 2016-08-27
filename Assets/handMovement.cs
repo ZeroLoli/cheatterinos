@@ -26,10 +26,10 @@ public class handMovement : MonoBehaviour
         posX = transform.position.x;
         posY = transform.position.y;
         posZ = transform.position.z;
-        minX = desk.transform.position.x - 0.5f;
-        maxX = desk.transform.position.x + 0.5f;
-        minZ = desk.transform.position.z - 0.5f;
-        maxZ = desk.transform.position.z + 0.5f;
+        minX = desk.transform.position.x - 0.48f;
+        maxX = desk.transform.position.x + 0.48f;
+        minZ = desk.transform.position.z - 0.48f;
+        maxZ = desk.transform.position.z + 0.48f;
 
 
     }
@@ -65,7 +65,6 @@ public class handMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse0))
         {
             transform.position = new Vector3(posX, posY - 0.005f, posZ);
-            //Gizmos.DrawLine()
             /*GL.PushMatrix();
             GL.Begin(GL.LINES);
             GL.Color(Color.black);
@@ -76,8 +75,6 @@ public class handMovement : MonoBehaviour
             //paper.AddComponent<LineRenderer>();
             //line = pen.GetComponent<LineRenderer>();
             //DrawLine(pen.transform.position, new Vector3(pen.transform.position.x, paper.transform.position.y, pen.transform.position.z) /*+ new Vector3(0,0,0.01f)*/, Color.black, mat);
-            // Dynamic drawing:
-
         }
         /*if (drawing) {
             nodeList.Add(pen.transform.position);
