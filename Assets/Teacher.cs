@@ -12,19 +12,21 @@ public class Teacher : MonoBehaviour
     public bool spotted = false;
     public GameObject player;
     public float vlimit, hlimit;
-
-    void FixedUpdate()
+    void Update()
     {
-        if (Vector3.Angle(transform.forward, transform.parent.forward) >= radar/2) // swap directions
-        {
+        Debug.Log(Vector3.Angle(transform.forward, transform.parent.forward));
+    }
+    void FixedUpdate() {
+        
+        if (Vector3.Angle(transform.right, transform.parent.right) >= radar/2) { // swap directions
             direction *= -1;
-            transform.Rotate(Vector3.up * direction * speed * Time.deltaTime);
+            transform.Rotate(0, 0, Time.deltaTime * direction * speed);
         }
-        else
-        {
-            transform.Rotate(Vector3.up * direction * speed * Time.deltaTime); // rotate the teach head
+        else {
+            transform.Rotate(0, 0, Time.deltaTime * direction * speed); // rotate the teach head
         }
-        if (Vector3.Angle(transform.forward, transform.parent.forward) <= fov && Vector3.Angle(player.transform.forward, Vector3.forward) >= hlimit) // teach has caught player cheating
+        if (Vector3.Angle(transform.right, transform.parent.right) <= fov && Vector3.Angle(new Vector3(player.transform.forward.x, 0, player.transform.forward.z), Vector3.forward) >= hlimit) { // teach has caught player cheating
             spotted = true;
+        }
     }
 }
