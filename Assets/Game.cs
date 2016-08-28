@@ -19,15 +19,17 @@ public class Game : MonoBehaviour
     AudioSource audio;
     public cameraMovement cameramovement;
     public Teacher teacher;
-    public List<GameObject> neighborDesks = new List<GameObject>(); 
+    public List<GameObject> neighborDesks = new List<GameObject>();
+    public List<GameObject> neighborCanvas = new List<GameObject>();
     public List<GameObject> correctCheckboxes = new List<GameObject>();
     public Drawing drawing;
     public int questionAmount = 5;
     public TextAsset questionFile;
+    private List<string> generatedQuestions;
 
     void Start()
     {
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
         audio = GetComponent<AudioSource>();
         if (Debug.isDebugBuild) // if in editor or debug build show some useful variables
         {
@@ -92,7 +94,7 @@ public class Game : MonoBehaviour
     GameObject GenerateExam()
     {
         // empty parent object for positioning purposes (also contains a broken checkbox header, remove those and attach separately)
-        GameObject exam = (GameObject)Instantiate(examPrefab, desk.transform.position + Vector3.up * /*(desk.transform.GetComponent<Collider>().bounds.extents.y + 0.01f)*/ 0.05f, Quaternion.identity);
+        GameObject exam = (GameObject)Instantiate(examPrefab, desk.transform.position + Vector3.up * /*(desk.transform.GetComponent<Collider>().bounds.extents.y + 0.01f)*/ 0.03f, Quaternion.identity);
                                                                                         //new Vector3(0, desk.transform.localScale.z / 2, 0), Quaternion.identity); 
         //load a bunch of random words from a text file and split on newline
         string[] questions = questionFile.text.Split('\n');
@@ -109,6 +111,8 @@ public class Game : MonoBehaviour
                 question += (question.Length == 0 ? "-" : " ") + questions[UnityEngine.Random.Range(0, questions.Length - 1)];
             question += "?"; // append a question mark for good measure
             row.transform.FindChild("Question").GetComponent<Text>().text = question; // set the text for the object
+            // store to use with others' exams
+            //generatedQuestions.Add(question);
 
             // randomize which checkbox is correct TODO mark the correct answers on neighbour exams
             QuestionRow questionrow = row.GetComponent<QuestionRow>();
@@ -117,9 +121,9 @@ public class Game : MonoBehaviour
 
             row.transform.parent = exam.transform;
         }
-        for (int i = 0; i < neighborDesks.Count; i++)
-        {
+        for (int i = 0; i < neighborDesks.Count; i++) {
             GameObject neighborExam = (GameObject)Instantiate(exam, neighborDesks[i].transform.position + Vector3.up * 0.05f, Quaternion.identity);
+            neighborExam.transform.parent = neighborCanvas[i].transform;
         }
         exam.transform.parent = canvas.transform;
         
