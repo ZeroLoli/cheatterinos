@@ -19,10 +19,12 @@ ModelImporter:
     2300002: FingerJoint1
     2300004: FingerJoint1_001
     2300006: KasiNyrkki
+    2300008: //RootNode
     3300000: BoneShapeKnucle
     3300002: FingerJoint1
     3300004: FingerJoint1_001
     3300006: KasiNyrkki
+    3300008: //RootNode
     4300000: KasiNyrkki
     4300002: BoneShapeKnucle
     4300004: FingerJoint1

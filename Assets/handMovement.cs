@@ -24,8 +24,7 @@ public class handMovement : MonoBehaviour
     float posX, posY, posZ;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
         posX = transform.position.x;
         posY = transform.position.y;
         posZ = transform.position.z;
@@ -33,61 +32,15 @@ public class handMovement : MonoBehaviour
         maxX = desk.transform.position.x + 1f;
         minZ = desk.transform.position.z - 1f;
         maxZ = desk.transform.position.z + 1f;
-
-
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        /*if (Input.GetKey(KeyCode.Mouse0) {
-            handY -= speedY * Time.deltaTime;
-            handY = Mathf.Clamp(handY, minY, maxY);
-            transform.Translate(Vector3.down * Time.deltaTime, Space.World);
-        }*/
-        //else if (penY <= 0.7f) { 
-        //    penY += speedY * Time.deltaTime;
-        //    transform.Translate(new Vector3(0, 0, penY));
-        //}
-
-        // Hand movement (Y), drawing
-
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            /*    GameObject myLine = new GameObject();
-                myLine.AddComponent<LineRenderer>();
-                LineRenderer line = myLine.GetComponent<LineRenderer>();
-                line.material = mat;
-                line.SetColors(Color.black, Color.black);
-                line.SetWidth(0.01f, 0.01f);
-                nodeList = new ArrayList();
-                line.SetVertexCount(0);
-                nodeList.Add(pen.transform.position);
-                drawing = true;*/
-        }
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
+    void Update() {
+        if (Input.GetKey(KeyCode.Mouse0)) {
             transform.position = new Vector3(posX, posY - 0.005f, posZ);
-            /*GL.PushMatrix();
-            GL.Begin(GL.LINES);
-            GL.Color(Color.black);
-            GL.Vertex(new Vector3(posX, posY, posZ));
-            GL.Vertex(new Vector3(posX, posY, posZ));
-            GL.End();
-            GL.PopMatrix();*/
-            //paper.AddComponent<LineRenderer>();
-            //line = pen.GetComponent<LineRenderer>();
-            //DrawLine(pen.transform.position, new Vector3(pen.transform.position.x, paper.transform.position.y, pen.transform.position.z) /*+ new Vector3(0,0,0.01f)*/, Color.black, mat);
         }
-        /*if (drawing) {
-            nodeList.Add(pen.transform.position);
-            line.SetVertexCount(nodeList.Count);
-            line.SetPosition(nodeList.Count - 1, (Vector3)nodeList[nodeList.Count - 1]);
-        }*/
-        if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
+        if (Input.GetKeyUp(KeyCode.Mouse0)) {
             transform.position = new Vector3(posX, posY, posZ);
-            //    drawing = false;
         }
 
         // Hand movement (X+Z)
