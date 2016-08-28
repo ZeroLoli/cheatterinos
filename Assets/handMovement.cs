@@ -29,10 +29,10 @@ public class handMovement : MonoBehaviour
         posX = transform.position.x;
         posY = transform.position.y;
         posZ = transform.position.z;
-        minX = desk.transform.position.x - 0.55f;
-        maxX = desk.transform.position.x + 0.55f;
-        minZ = desk.transform.position.z - 0.5f;
-        maxZ = desk.transform.position.z + 0.5f;
+        minX = desk.transform.position.x - 1f;
+        maxX = desk.transform.position.x + 1f;
+        minZ = desk.transform.position.z - 1f;
+        maxZ = desk.transform.position.z + 1f;
 
 
     }

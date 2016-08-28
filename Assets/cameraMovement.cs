@@ -47,7 +47,7 @@ public class cameraMovement : MonoBehaviour {
         // Gazepoint updating !! TRY FIXATION POINT INSTEAD?
         var gazePoint = _gazePointProvider.Last;
 
-        // Camera rotation; either keyboard or gazepoint
+        // Camera rotation; either keyboard or gazepoint !! LATER VERSION, obsolete: replace with (almost) fixed camera angles depending on where player is looking at
         if (Input.GetKey(KeyCode.W) || (gazePoint.Screen.y > UnityEngine.Screen.height * 0.9)) {
             rotationY += speedY * Time.deltaTime;
             rotationY = Mathf.Clamp(rotationY, minY, maxY);
