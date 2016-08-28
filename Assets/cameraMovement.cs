@@ -7,7 +7,6 @@ public class cameraMovement : MonoBehaviour {
 
     public float minX = -80.0f;
     public float maxX = 80.0f;
-
     public float minY = -35.0f;
     public float maxY = 35.0f;
 
@@ -19,13 +18,13 @@ public class cameraMovement : MonoBehaviour {
 
     private EyeXHost _eyeXHost;
     private IEyeXDataProvider<EyeXGazePoint> _gazePointProvider;
+    //private EyeXFixationDataStream<EyeXFixationPoint> or something like that? _fixPointProvider;
 
     float rotationX = 0.0f;
     float rotationY = 0.0f;
 
     // Use this for initialization
     void Start () {
-        Cursor.lockState = CursorLockMode.Locked;
         _eyeXHost = EyeXHost.GetInstance();
         _gazePointProvider = _eyeXHost.GetGazePointDataProvider
                     (Tobii.EyeX.Framework.GazePointDataMode.LightlyFiltered);
@@ -45,11 +44,10 @@ public class cameraMovement : MonoBehaviour {
         }
 		*/
 
-        // Gazepoint updating
+        // Gazepoint updating !! TRY FIXATION POINT INSTEAD?
         var gazePoint = _gazePointProvider.Last;
-        Debug.Log(gazePoint.Screen.x);
-        // Basic keyboard movement
-        // ??? IEyeXDataProvider < EyeXGazePoint > GetGazePointDataProvider(GazePointDataMode mode)
+
+        // Camera rotation; either keyboard or gazepoint
         if (Input.GetKey(KeyCode.W) || (gazePoint.Screen.y > UnityEngine.Screen.height * 0.9)) {
             rotationY += speedY * Time.deltaTime;
             rotationY = Mathf.Clamp(rotationY, minY, maxY);

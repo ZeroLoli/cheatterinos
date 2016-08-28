@@ -1,0 +1,225 @@
+fileFormatVersion: 2
+guid: d3bda29b60fde504cb159cd336981591
+timeCreated: 1472326379
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Bone
+    100002: Bone_0
+    100004: Bone_001
+    100006: Bone_002
+    100008: Bone_004
+    100010: Bone_005
+    100012: Bone_006
+    100014: Bone_008
+    100016: Bone_009
+    100018: Bone_010
+    100020: Bone_012
+    100022: Bone_013
+    100024: Bone_014
+    100026: Bone_016
+    100028: Bone_017
+    100030: Bone_018
+    100032: Bone_1
+    100034: Bone_10
+    100036: Bone_11
+    100038: Bone_12
+    100040: Bone_13
+    100042: Bone_14
+    100044: Bone_15
+    100046: Bone_16
+    100048: Bone_17
+    100050: Bone_18
+    100052: Bone_19
+    100054: Bone_2
+    100056: Bone_20
+    100058: Bone_21
+    100060: Bone_22
+    100062: Bone_23
+    100064: Bone_24
+    100066: Bone_25
+    100068: Bone_26
+    100070: Bone_27
+    100072: Bone_28
+    100074: Bone_29
+    100076: Bone_3
+    100078: Bone_4
+    100080: Bone_5
+    100082: Bone_6
+    100084: Bone_7
+    100086: Bone_8
+    100088: Bone_9
+    100090: BoneShapeKnucle
+    100092: FingerJoint1
+    100094: FingerJoint1_001
+    100096: KasiLowPoly
+    100098: KasiLowPoly_001
+    100100: KasiLowPoly_001_MeshPart0
+    100102: KasiLowPoly_001_MeshPart1
+    100104: KasiLowPoly_001_MeshPart2
+    100106: KasiLowPoly_002
+    100108: KasiLowPoly_003
+    100110: KasiORIKINAAL
+    100112: //RootNode
+    100114: Kyna
+    100116: TEHLEFTHAND
+    100118: TEHLEFTHAND_001
+    100120: TEHRIGHTHAND
+    400000: Bone
+    400002: Bone_0
+    400004: Bone_001
+    400006: Bone_002
+    400008: Bone_004
+    400010: Bone_005
+    400012: Bone_006
+    400014: Bone_008
+    400016: Bone_009
+    400018: Bone_010
+    400020: Bone_012
+    400022: Bone_013
+    400024: Bone_014
+    400026: Bone_016
+    400028: Bone_017
+    400030: Bone_018
+    400032: Bone_1
+    400034: Bone_10
+    400036: Bone_11
+    400038: Bone_12
+    400040: Bone_13
+    400042: Bone_14
+    400044: Bone_15
+    400046: Bone_16
+    400048: Bone_17
+    400050: Bone_18
+    400052: Bone_19
+    400054: Bone_2
+    400056: Bone_20
+    400058: Bone_21
+    400060: Bone_22
+    400062: Bone_23
+    400064: Bone_24
+    400066: Bone_25
+    400068: Bone_26
+    400070: Bone_27
+    400072: Bone_28
+    400074: Bone_29
+    400076: Bone_3
+    400078: Bone_4
+    400080: Bone_5
+    400082: Bone_6
+    400084: Bone_7
+    400086: Bone_8
+    400088: Bone_9
+    400090: BoneShapeKnucle
+    400092: FingerJoint1
+    400094: FingerJoint1_001
+    400096: KasiLowPoly
+    400098: KasiLowPoly_001
+    400100: KasiLowPoly_001_MeshPart0
+    400102: KasiLowPoly_001_MeshPart1
+    400104: KasiLowPoly_001_MeshPart2
+    400106: KasiLowPoly_002
+    400108: KasiLowPoly_003
+    400110: KasiORIKINAAL
+    400112: //RootNode
+    400114: Kyna
+    400116: TEHLEFTHAND
+    400118: TEHLEFTHAND_001
+    400120: TEHRIGHTHAND
+    2300000: BoneShapeKnucle
+    2300002: FingerJoint1
+    2300004: FingerJoint1_001
+    2300006: KasiLowPoly_001_MeshPart0
+    2300008: KasiLowPoly_001_MeshPart1
+    2300010: KasiLowPoly_001_MeshPart2
+    2300012: KasiORIKINAAL
+    2300014: Kyna
+    3300000: BoneShapeKnucle
+    3300002: FingerJoint1
+    3300004: FingerJoint1_001
+    3300006: KasiLowPoly_001_MeshPart0
+    3300008: KasiLowPoly_001_MeshPart1
+    3300010: KasiLowPoly_001_MeshPart2
+    3300012: KasiORIKINAAL
+    3300014: Kyna
+    4300000: KasiLowPoly_003
+    4300002: KasiLowPoly_002
+    4300004: FingerJoint1_001
+    4300006: FingerJoint1
+    4300008: BoneShapeKnucle
+    4300010: KasiLowPoly
+    4300012: Kyna
+    4300014: KasiORIKINAAL
+    4300016: KasiLowPoly_001_MeshPart0
+    4300018: KasiLowPoly_001_MeshPart1
+    4300020: KasiLowPoly_001_MeshPart2
+    7400000: Default Take
+    9500000: //RootNode
+    13700000: KasiLowPoly
+    13700002: KasiLowPoly_002
+    13700004: KasiLowPoly_003
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
