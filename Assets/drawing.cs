@@ -4,13 +4,13 @@ using System.Collections.Generic;
 public class Drawing : MonoBehaviour {
     public GameObject pen, desk;
     public Material mat;
+    public List<Vector3> allNodes = new List<Vector3>();
     public List<Vector3> nodeList = new List<Vector3>();
     private Vector3 penPos;
     private LineRenderer line;
     private bool lineDraw, penDown = false;
 
     void Update() {
-        Debug.Log(Physics.Raycast(pen.transform.position, Vector3.down));
         // Don't draw: Raise pen
         if (Input.GetKeyUp(KeyCode.Mouse0) || !penDown) {
             penDown = false;
@@ -38,11 +38,13 @@ public class Drawing : MonoBehaviour {
                 line.useWorldSpace = true;
                 nodeList = new List<Vector3>();
                 line.SetPosition(0, transform.localPosition);
+                allNodes.Add(transform.localPosition);
                 //penDown = true;
                 lineDraw = true;
             }
             // Continue drawing
             else {
+                allNodes.Add(pen.transform.position);
                 nodeList.Add(pen.transform.position);
                 line.SetVertexCount(nodeList.Count);
                 line.SetPosition(nodeList.Count - 1, (Vector3)nodeList[nodeList.Count - 1]);

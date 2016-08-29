@@ -12,10 +12,7 @@ public class Teacher : MonoBehaviour
     public bool spotted = false;
     public GameObject player;
     public float vlimit, hlimit;
-    void Update()
-    {
-        Debug.Log(Vector3.Angle(transform.forward, transform.parent.forward));
-    }
+
     void FixedUpdate() {
         
         if (Vector3.Angle(transform.right, transform.parent.right) >= radar/2) { // swap directions

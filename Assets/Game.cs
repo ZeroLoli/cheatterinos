@@ -9,8 +9,8 @@ using System.Collections.Generic;
 public class Game : MonoBehaviour
 {
     public Canvas canvas;
-    public Text text;
-    public GameObject debug, clockArm, player, busted, button, box, desk, examPrefab, rowPrefab, crossMark;
+    public Text text, scoreText;
+    public GameObject debug, clockArm, player, busted, button, box, desk, examPrefab, rowPrefab, crossMark, infoPanel;
     enum State { STARTING, STARTED, ENDED };
     State state = State.STARTING;
     float duration;
@@ -21,6 +21,8 @@ public class Game : MonoBehaviour
     public Teacher teacher;
     public List<GameObject> neighborDesks = new List<GameObject>();
     public List<GameObject> neighborCanvas = new List<GameObject>();
+    private List<GameObject> checkboxes = new List<GameObject>();
+    private int wrongAnswers;
     public List<GameObject> correctCheckboxes = new List<GameObject>();
     public Drawing drawing;
     public int questionAmount = 5;
@@ -28,7 +30,8 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        Application.runInBackground = true;
+        Cursor.lockState = CursorLockMode.Confined;
         audio = GetComponent<AudioSource>();
         if (Debug.isDebugBuild) // if in editor or debug build show some useful variables
         {
@@ -41,11 +44,7 @@ public class Game : MonoBehaviour
 
     void FixedUpdate()
     {
-        
-        if (state == State.STARTED)
-        {
-            //Debug reasons vvv
-            CheckExam();
+        if (state == State.STARTED) {
             if (Time.time >= deadline)
             {
                 audio.Stop();
@@ -75,6 +74,7 @@ public class Game : MonoBehaviour
     /// </summary>
     public void startGame()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         duration = float.Parse(text.text) * 60;
         deadline = Time.time + duration;
         debug.SetActive(false);
@@ -93,7 +93,7 @@ public class Game : MonoBehaviour
     GameObject GenerateExam()
     {
         // empty parent object for positioning purposes (also contains a broken checkbox header, remove those and attach separately)
-        GameObject exam = (GameObject)Instantiate(examPrefab, desk.transform.position + Vector3.up * /*(desk.transform.GetComponent<Collider>().bounds.extents.y + 0.01f)*/ 0.025f, Quaternion.identity);
+        GameObject exam = (GameObject)Instantiate(examPrefab, desk.transform.position + Vector3.up * /*(desk.transform.GetComponent<Collider>().bounds.extents.y + 0.01f)*/ 0.022f, Quaternion.identity);
                                                                                         //new Vector3(0, desk.transform.localScale.z / 2, 0), Quaternion.identity); 
         //load a bunch of random words from a text file and split on newline
         string[] questions = questionFile.text.Split('\n');
@@ -113,16 +113,22 @@ public class Game : MonoBehaviour
 
             // randomize which checkbox is correct TODO mark the correct answers on neighbour exams
             QuestionRow questionrow = row.GetComponent<QuestionRow>();
+            for (int j = 0; j < row.transform.GetComponentsInChildren<BoxCollider>().Length; j++)
+            {
+                checkboxes.Add(row.transform.GetComponentsInChildren<BoxCollider>()[j].gameObject);
+            }
             questionrow.rightAnswerBox = row.transform.GetComponentsInChildren<BoxCollider>()[UnityEngine.Random.Range(0, 3)].gameObject;
             correctCheckboxes.Add(questionrow.rightAnswerBox);
+            checkboxes.Remove(questionrow.rightAnswerBox);
 
             row.transform.parent = exam.transform;
         }
+       wrongAnswers = checkboxes.Count;
+        // Generate copies of exam with correct answers marked on neighboring desks
         for (int i = 0; i < neighborDesks.Count; i++) {
             GameObject neighborExam = (GameObject)Instantiate(exam, neighborDesks[i].transform.position + Vector3.up * 0.025f, Quaternion.identity);
             neighborExam.transform.parent = neighborCanvas[i].transform;
             for (int j = 0; j < correctCheckboxes.Count; j++) {
-                Debug.Log("checkbox count: " + j);
                 GameObject correctAnswer = (GameObject)Instantiate(crossMark, new Vector3(neighborDesks[i].transform.position.x, 0,  0) + correctCheckboxes[j].transform.position + Vector3.up * 0.001f, Quaternion.identity);
             }
         }
@@ -136,20 +142,35 @@ public class Game : MonoBehaviour
     /// </summary>
     void CheckExam()
     {
-        // PLAN: array with as many zeroes as there are questions, 
-        List<int> correctAnswers;
+        Cursor.lockState = CursorLockMode.None;
+        Debug.Log("checking exam");
         Debug.Log(correctCheckboxes.Count);
-        for (int i = 0; i < drawing.nodeList.Count; i++)
+        for (int i = 0; i < drawing.allNodes.Count; i++)
         {
             // make a raycast from each node, if you hit a box you are in it. and the correct answer box is removed from a collection dunno why.
             RaycastHit hit;
-            if (Physics.Raycast(drawing.nodeList[i], Vector3.down, out hit)) {
+            Debug.DrawRay(drawing.allNodes[i], Vector3.down * 10);
+            if (Physics.Raycast(drawing.allNodes[i]+Vector3.up * 0.2f, Vector3.down * 0.5f, out hit)) {
+                Debug.Log(hit.transform.gameObject);
                 if (correctCheckboxes.Contains(hit.transform.gameObject))
-                    ;
+                {
+                    Debug.Log("contained");
+                    correctCheckboxes.Remove(hit.transform.gameObject);
+                }
+                if (checkboxes.Contains(hit.transform.gameObject))
+                {
+                    checkboxes.Remove(hit.transform.gameObject);
+                }
             }
         }
-        if (false) {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-        }
+        Debug.Log(correctCheckboxes.Count);
+        int score = questionAmount - correctCheckboxes.Count - (wrongAnswers-checkboxes.Count);
+        Debug.Log("your score: " + score);
+        scoreText.text = "Your score: " + score + "\nCorrect answers: " + (questionAmount - correctCheckboxes.Count);
+        infoPanel.SetActive(true);
+        
+        //if (correctCheckboxes.Count == 0) {
+        //    UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        //}
     }
 }
