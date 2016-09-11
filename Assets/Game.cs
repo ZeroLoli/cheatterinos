@@ -30,20 +30,23 @@ public class Game : MonoBehaviour
 
     void Start()
     {
+        drawing.enabled = false;
+        cameramovement.enabled = false;
         Application.runInBackground = true;
         Cursor.lockState = CursorLockMode.Confined;
         audio = GetComponent<AudioSource>();
-        if (Debug.isDebugBuild) // if in editor or debug build show some useful variables
-        {
-            debug.SetActive(true);
-            cameramovement.enabled = true;
-        }
         teacher.player = player;
         GenerateExam(); // create the player exam TODO also create the neighbour exams, this function returns the exam, toggle the correct answers on somehow
     }
 
     void FixedUpdate()
     {
+        if (Input.GetKey(KeyCode.R)) {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        }
+        if (Input.GetKey(KeyCode.Escape)) {
+            Application.Quit();
+        }
         if (state == State.STARTED) {
             if (Time.time >= deadline)
             {
@@ -80,6 +83,7 @@ public class Game : MonoBehaviour
         debug.SetActive(false);
         button.SetActive(false);
         cameramovement.enabled = true;
+        drawing.enabled = true;
         teacher.enabled = true;
         audio.clip = clock;
         audio.Play();
@@ -166,7 +170,9 @@ public class Game : MonoBehaviour
         Debug.Log(correctCheckboxes.Count);
         int score = questionAmount - correctCheckboxes.Count - (wrongAnswers-checkboxes.Count);
         Debug.Log("your score: " + score);
-        scoreText.text = "Your score: " + score + "\nCorrect answers: " + (questionAmount - correctCheckboxes.Count);
+        scoreText.text =  "\nCorrect answers: " + (questionAmount - correctCheckboxes.Count)
+            + "\nWrong answers: " + (wrongAnswers-checkboxes.Count) + "\n- - - - -\nYour score: " + score
+            + "\n\nR to restart or Esc to quit";
         infoPanel.SetActive(true);
         
         //if (correctCheckboxes.Count == 0) {

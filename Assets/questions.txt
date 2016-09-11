@@ -1,8 +1,7 @@
 A dog
 A cat
-Perkele
-Viinaa
-MItä
+If
+Else
 What
 Who
 Is
@@ -11,5 +10,21 @@ There
 That
 Those
 When
+Into
+How
+Cause
+Since
+Has
+Been
+Anyone
+Really
+As
+Far
+Into
+Moon
+Rocket
+Train
 9
+5
+2
 ?
